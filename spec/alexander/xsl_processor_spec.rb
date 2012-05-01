@@ -39,7 +39,7 @@ class DummyApp
 end
 
 CHROME_18 = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.19 (KHTML, like Gecko) Ubuntu/11.10 Chromium/18.0.1025.151 Chrome/18.0.1025.151 Safari/535.19"
-FIREFOX_1 = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:12.0) Gecko/20100101 Firefox/1.0"
+CURL = "curl/7.21.6 (x86_64-pc-linux-gnu) libcurl/7.21.6 OpenSSL/1.0.0e zlib/1.2.3.4 libidn/1.22 librtmp/2.3"
 
 describe Alexander::XslProcessor do
 
@@ -47,8 +47,8 @@ describe Alexander::XslProcessor do
     {"HTTP_USER_AGENT" => CHROME_18}
   end
 
-  def env_with_firefox
-    {"HTTP_USER_AGENT" => FIREFOX_1}
+  def env_with_curl
+    {"HTTP_USER_AGENT" => CURL}
   end
 
   before do
@@ -77,7 +77,7 @@ describe Alexander::XslProcessor do
     end
     describe "when request came from a XSLT NOT enable browser" do
       it "should parse XML to HTML" do
-        status, headers, response = @filter.call(env_with_firefox)
+        status, headers, response = @filter.call(env_with_curl)
         status.must_equal 200
         headers["Content-type"].must_equal "text/html"
         response.body.must_equal ["<html><body></body></html>\n"]
@@ -90,7 +90,7 @@ describe Alexander::XslProcessor do
 <root />
         XML
         ])
-        status, header, response = @filter.call(env_with_firefox)
+        status, header, response = @filter.call(env_with_curl)
         response.body.must_equal @dummy_app.xml.body
       end
     end
