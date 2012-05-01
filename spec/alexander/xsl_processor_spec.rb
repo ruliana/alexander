@@ -4,7 +4,7 @@ SimpleCov.start
 require 'minitest/autorun'
 require 'minitest/colorize'
 
-require_relative '../../lib/sandra'
+require_relative '../../lib/alexander'
 
 class DummyApp
   attr_accessor :xml, :xsl
@@ -38,10 +38,10 @@ class DummyApp
   end
 end
 
-CHROME_18 =  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.19 (KHTML, like Gecko) Ubuntu/11.10 Chromium/18.0.1025.151 Chrome/18.0.1025.151 Safari/535.19"
+CHROME_18 = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.19 (KHTML, like Gecko) Ubuntu/11.10 Chromium/18.0.1025.151 Chrome/18.0.1025.151 Safari/535.19"
 FIREFOX_1 = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:12.0) Gecko/20100101 Firefox/1.0"
 
-describe Sandra::Dee do
+describe Alexander::XslProcessor do
 
   def env_with_chrome
     {"HTTP_USER_AGENT" => CHROME_18}
@@ -53,7 +53,7 @@ describe Sandra::Dee do
 
   before do
     @dummy_app = DummyApp.new
-    @filter = Sandra::Dee.new(@dummy_app)
+    @filter = Alexander::XslProcessor.new(@dummy_app)
   end
 
   def app

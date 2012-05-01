@@ -1,3 +1,3 @@
-module Sandra
+module Alexander
   VERSION = "0.5.0"
 end

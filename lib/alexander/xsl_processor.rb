@@ -2,7 +2,7 @@ require 'rack'
 require 'useragent'
 require 'nokogiri'
 
-module Sandra
+module Alexander
   Browser = Struct.new(:browser, :version)
 
   XSLT_ENABLE_BROWSERS = [
@@ -13,7 +13,7 @@ module Sandra
     Browser.new("Safari", "3.0")
   ]
 
-  class Dee
+  class XslProcessor
     def initialize(app)
       @app = app
     end
