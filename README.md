@@ -1,6 +1,14 @@
 # Alexander
 
-TODO: Write a gem description
+A Rack middleware to process XML through XSLT to generate HTML.
+
+The process occur only:
+
+1. If the file served is a XML (`mime-type: "application/xml"`);
+2. **and** the XML has a stylesheet processing instruction (`<?xml-stylesheet type="text/xsl" href="/teste.xsl"?>`);
+3. **and** the browser (`HTTP_USER_AGENT` header) has **no** support for XSLT processing.
+
+If *any* of these conditions is *false*, Alexander will do nothing.
 
 ## Installation
 
@@ -18,7 +26,29 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Add to your Rack stack:
+
+    use Alexander::XslProcessor
+
+## Browsers with XSLT processing support:
+
+* Chrome &gt;= 1.0
+* Firefox &gt;= 3.0
+* Safari &gt;= 3.0
+* Internet Explorer &gt;= 6.0
+* Opera &gt;= 9.0
+
+## TODO
+* Better error handling:
+  * Invalid XML.
+  * Invalid XSL.
+  * XSL page not found.
+* URL parameter to force XSLT processing.
+* Config parameter to force XSLT processing.
+* `Content-Type` control, make it able to produce things other than HTML.
+* Examples of use in README.
+  * Sinatra
+  * Rails
 
 ## Contributing
 
