@@ -10,6 +10,8 @@ The process occur only:
 
 If *any* of these conditions is *false*, Alexander will do nothing.
 
+The XSLT processing can be forced in a XSLT enable browser passing "force_xslt_parameter=true" as URL parameter (QUERY_STRING)
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -37,6 +39,11 @@ Add to your Rack stack:
 * Safari &gt;= 3.0
 * Internet Explorer &gt;= 6.0
 * Opera &gt;= 9.0
+
+## CHANGELOG
+
+0.5.0 - Initial published version
+0.5.1 - "force_xslt_processing" parameter
 
 ## TODO
 * Better error handling:
