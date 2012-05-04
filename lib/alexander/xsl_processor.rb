@@ -3,8 +3,9 @@ require 'useragent'
 require 'nokogiri'
 
 module Alexander
-  Browser = Struct.new(:browser, :version)
+  FORCE_PROCESSING_PARAMETER = "force_xslt_processing"
 
+  Browser = Struct.new(:browser, :version)
   XSLT_ENABLE_BROWSERS = [
     Browser.new("Chrome", "1.0"),
     Browser.new("Firefox", "3.0"),
@@ -14,26 +15,25 @@ module Alexander
   ]
 
   class XslProcessor
-    FORCE_PROCESSING = "force_xslt_processing"
 
     def initialize(app)
       @app = app
     end
 
     def call(env)
-      status, headers, body = @app.call(env)
+      response = @app.call(env)
+      status, headers, body = response
 
-      return [status, headers, body] unless xml?(headers)
+      return response unless xml?(headers)
 
-      request = Rack::Request.new(env)
-      force = request.params[FORCE_PROCESSING] == "true"
-      return [status, headers, body] if xlst_enable_browser?(env) && !force
+      force = force_processing(env)
+      return response if xlst_enable_browser?(env) && !force
 
-      html_response = to_html(env, body)
-      return [status, headers, body] unless html_response
+      html_body = to_html(env, body)
+      return response unless html_body
 
       headers["Content-type"] = "text/html"
-      Rack::Response.new([html_response], status, headers).finish
+      Rack::Response.new([html_body], status, headers).finish
     end
 
     def xml?(headers)
@@ -44,6 +44,11 @@ module Alexander
       return false unless env && env["HTTP_USER_AGENT"]
       user_agent = UserAgent.parse(env["HTTP_USER_AGENT"])
       XSLT_ENABLE_BROWSERS.detect { |browser| user_agent >= browser }
+    end
+
+    def force_processing(env)
+      request = Rack::Request.new(env)
+      request.params[FORCE_PROCESSING_PARAMETER] == "true"
     end
 
     def to_html(env, body)
