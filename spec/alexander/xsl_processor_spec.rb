@@ -44,11 +44,11 @@ CURL = "curl/7.21.6 (x86_64-pc-linux-gnu) libcurl/7.21.6 OpenSSL/1.0.0e zlib/1.2
 describe Alexander::XslProcessor do
 
   def env_with_chrome
-    {"HTTP_USER_AGENT" => CHROME_18}
+    {"HTTP_USER_AGENT" => CHROME_18, "rack.input" => ""}
   end
 
   def env_with_curl
-    {"HTTP_USER_AGENT" => CURL}
+    {"HTTP_USER_AGENT" => CURL, "rack.input" => ""}
   end
 
   before do
@@ -73,6 +73,14 @@ describe Alexander::XslProcessor do
       it "should let response as is" do
         status, headers, response = @filter.call(env_with_chrome)
         response.body.must_equal @dummy_app.xml.body
+      end
+      describe "when receive a force process parameter" do
+        it "should parse XML to HTML" do
+          status, headers, response = @filter.call(env_with_chrome.merge({"QUERY_STRING" => "force_xslt_processing=true"}))
+          status.must_equal 200
+          headers["Content-type"].must_equal "text/html"
+          response.body.must_equal ["<html><body></body></html>\n"]
+        end
       end
     end
     describe "when request came from a XSLT NOT enable browser" do

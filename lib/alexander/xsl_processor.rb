@@ -14,6 +14,8 @@ module Alexander
   ]
 
   class XslProcessor
+    FORCE_PROCESSING = "force_xslt_processing"
+
     def initialize(app)
       @app = app
     end
@@ -22,7 +24,10 @@ module Alexander
       status, headers, body = @app.call(env)
 
       return [status, headers, body] unless xml?(headers)
-      return [status, headers, body] if xlst_enable_browser?(env)
+
+      request = Rack::Request.new(env)
+      force = request.params[FORCE_PROCESSING] == "true"
+      return [status, headers, body] if xlst_enable_browser?(env) && !force
 
       html_response = to_html(env, body)
       return [status, headers, body] unless html_response
