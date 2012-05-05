@@ -12,7 +12,7 @@ The process occur only:
 
 If *any* of these conditions is *false*, Alexander will do nothing.
 
-The XSLT processing can be forced in a XSLT enable browser passing "`force_xslt_parameter=true`" as URL parameter (`QUERY_STRING`). The parameter name is intentionaly long and specific to minimize chances of conflict.
+The XSLT processing can be forced in a XSLT enable browser passing "`force_xslt_processing=true`" as URL parameter (`QUERY_STRING`). The parameter name is intentionaly long and specific to minimize chances of conflict.
 
 ## Installation
 
@@ -36,7 +36,7 @@ Add to your Rack stack:
 
 If you want to force ALL requests to be processed by the server:
 
-    use Alexander::XslProcessor, force_xslt_parameter: true
+    use Alexander::XslProcessor, force_xslt_processing: true
 
 ## Browsers with XSLT processing support:
 
