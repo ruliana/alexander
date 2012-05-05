@@ -16,8 +16,9 @@ module Alexander
 
   class XslProcessor
 
-    def initialize(app)
+    def initialize(app, options = {})
       @app = app
+      @options = options
     end
 
     def call(env)
@@ -47,6 +48,7 @@ module Alexander
     end
 
     def force_processing(env)
+      return true if @options[FORCE_PROCESSING_PARAMETER.to_sym]
       request = Rack::Request.new(env)
       request.params[FORCE_PROCESSING_PARAMETER] == "true"
     end

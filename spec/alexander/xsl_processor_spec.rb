@@ -102,6 +102,17 @@ describe Alexander::XslProcessor do
         response.body.must_equal @dummy_app.xml.body
       end
     end
+    describe "when response is XML" do
+      describe "when filter is set to force XSLT processing" do
+        it "should parse XML to HTML" do
+          @filter = Alexander::XslProcessor.new(@dummy_app, force_xslt_processing: true)
+          status, headers, response = @filter.call(env_with_chrome)
+          status.must_equal 200
+          headers["Content-type"].must_equal "text/html"
+          response.body.must_equal ["<html><body></body></html>\n"]
+        end
+      end
+    end
   end
 end
 
