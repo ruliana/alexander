@@ -48,8 +48,8 @@ If you want to force ALL requests to be processed by the server:
 
 ## CHANGELOG
 
-0.5.0 - Initial published version
-0.5.1 - "force_xslt_processing" parameter
+* 0.5.0 - Initial published version
+* 0.6.0 - Adding "force_xslt_processing" parameter to URL and config
 
 ## TODO
 * Better error handling:
