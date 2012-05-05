@@ -2,6 +2,8 @@
 
 A Rack middleware to process XML through XSLT to generate HTML.
 
+It use the `<?xml-stylesheet ...?>` processing instruction found in XML to find wich XSLT to use. It works only if the XSLT is hosted inside the same application as the XML, as it does another call the the same Rack stack to found it.
+
 The process occur only:
 
 1. If the file served is a XML (`mime-type: "application/xml"`);
@@ -31,6 +33,10 @@ Or install it yourself as:
 Add to your Rack stack:
 
     use Alexander::XslProcessor
+
+If you want to force ALL requests to be processed by the server:
+
+    use Alexander::XslProcessor, force_xslt_parameter: true
 
 ## Browsers with XSLT processing support:
 
