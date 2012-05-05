@@ -55,7 +55,7 @@ module Alexander
 
     def to_html(env, body)
       xml = body_to_string(body)
-      xslt_request = detect_xslt_processing_instruction(xml)
+      xslt_request = find_xslt_path_in(xml)
       return unless xslt_request
 
       ask_xslt = env.dup
@@ -71,9 +71,9 @@ module Alexander
       xsl_parsed.transform(xml_parsed).to_s
     end
 
-    def detect_xslt_processing_instruction(xml)
+    def find_xslt_path_in(xml)
       match = xml.match(/<\?xml-stylesheet.*href="([^"]+)"/)
-      return match[1] if match
+      match[1] if match
     end
 
     def body_to_string(body)
