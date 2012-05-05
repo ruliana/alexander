@@ -2,7 +2,7 @@
 
 A Rack middleware to process XML through XSLT to generate HTML.
 
-It use the `<?xml-stylesheet ...?>` processing instruction found in XML to find wich XSLT to use. It works only if the XSLT is hosted inside the same application as the XML, as it does another call the the same Rack stack to found it.
+It use the `<?xml-stylesheet ...?>` processing instruction found in XML to find wich XSLT to use. It works only if the XSLT is hosted inside the same application as the XML, as it does another call the the same Rack stack to find it.
 
 The process occur only:
 
