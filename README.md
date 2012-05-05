@@ -56,12 +56,11 @@ If you want to force ALL requests to be processed by the server:
   * Invalid XML.
   * Invalid XSL.
   * XSL page not found.
-* URL parameter to force XSLT processing.
-* Config parameter to force XSLT processing.
 * `Content-Type` control, make it able to produce things other than HTML.
 * Examples of use in README.
   * Sinatra
   * Rails
+* Find XSLT files not in the same Rack stack (probably using open_uri)
 
 ## Contributing
 
