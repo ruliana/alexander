@@ -27,7 +27,7 @@ module Alexander
 
       return response unless xml?(headers)
 
-      force = force_processing(env)
+      force = force_processing?(env)
       return response if xlst_enable_browser?(env) && !force
 
       html_body = to_html(env, body)
@@ -47,7 +47,7 @@ module Alexander
       XSLT_ENABLE_BROWSERS.detect { |browser| user_agent >= browser }
     end
 
-    def force_processing(env)
+    def force_processing?(env)
       return true if @options[FORCE_PROCESSING_PARAMETER.to_sym]
       request = Rack::Request.new(env)
       request.params[FORCE_PROCESSING_PARAMETER] == "true"
@@ -63,7 +63,7 @@ module Alexander
       ask_xslt["REQUEST_PATH"] = xslt_request
       ask_xslt["REQUEST_URI"] = xslt_request
       ask_xslt["QUERY_STRING"] = ""
-      status, headers, xslt = @app.call(ask_xslt)
+      status, _, xslt = @app.call(ask_xslt)
       return unless status == 200
 
       xml_parsed = Nokogiri::XML(xml)
